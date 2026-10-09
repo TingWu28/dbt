@@ -25,6 +25,16 @@ customer_orders as (
 
 ),
 
+-- new
+customer_value as(
+    select orders.customer_id, 
+           sum(payment.AMOUNT) as lifetime_value
+           from orders 
+           left join RAW.STRIPE.PAYMENT as payment on orders.order_id = payment.ORDERID
+           group by orders.customer_id
+),
+-- new
+
 
 final as (
 
@@ -34,11 +44,13 @@ final as (
         customers.last_name,
         customer_orders.first_order_date,
         customer_orders.most_recent_order_date,
-        coalesce(customer_orders.number_of_orders, 0) as number_of_orders
+        coalesce(customer_orders.number_of_orders, 0) as number_of_orders,
+        customer_value.lifetime_value
 
     from customers
 
     left join customer_orders using (customer_id)
+    left join customer_value using (customer_id)
 
 )
 

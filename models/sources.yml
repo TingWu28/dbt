@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: stripe          # Logical source name used in source()
+    database: raw
+    schema: stripe
+    tables:
+      - name: payment
