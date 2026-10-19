@@ -2,16 +2,21 @@ sources:
   - name: jaffle_shop
     database: raw 
     schema: jaffle_shop
+    description: A clone of a Postgres database
     tables:
       - name: customers
+        description: raw customer data
         columns:
           - name: id
+            description: primary key
             data_tests:
               - unique 
               - not_null
       - name: orders
+        description: raw orders data
         columns:
           - name: id
+            description: primary key
             data_tests:
               - unique 
               - not_null
